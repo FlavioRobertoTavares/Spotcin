@@ -3,13 +3,8 @@ As a usuário,
 I want to ver o histórico de músicas e podcasts,
 So that eu posso saber quais as músicas e podcsts que eu mais ouço.
 
-<<<<<<< HEAD
 Scenario: Exibição do histórico de Múdicas dessa semana.
 Given que o usuário “João” está logado em sua conta.
-=======
-Scenario: Exibição do histórico de músicas desta semana.
-Given o usuário “João” está logado em sua conta.
->>>>>>> dev
 And ele está na página “inicial”. 
 When ele seleciona a opção “Histórico”. 
 And ele seleciona a opção “Histórico de Músicas”.
