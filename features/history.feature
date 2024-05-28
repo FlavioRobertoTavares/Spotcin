@@ -23,3 +23,9 @@ Given que o usuário "John Connor" está logado em sua conta.
 And ele está na página "Histórico de podcasts".
 When ele seleciona a opção "Veja Mais".
 Then ele é vê o Histórico de podcasts desde sempre".
+
+Scenario: Exibiçaõ do histórico de músicas desde sempre.
+Given que o usuário "John Connor" está logado em sua conta.
+And ele está na página "Histórico de Músicas".
+When ele seleciona a opção "Veja Mais".
+Then ele é vê o Histórico de músicas desde sempre".
