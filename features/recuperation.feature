@@ -16,3 +16,10 @@ And não existe o email “john.connor@ufpe.br” cadastrado no sistema.
 When ele preencher o campo e-mail com “john.connor@ufpe.br”
 And ele seleciona a opção “Enviar”.
 Then ele vê uma mensagem de erro “email não cadastrado”.
+
+Scenario: Verificação do e-mail e envio de senha.
+Given que o sistema recebeu o pedido de recuperação de senha com e-mail "john.connor@ufpe.br" pelo usuário "John Connor".
+And que o e-mail "john.connor@ufpe.br" está armazenado no sistema.
+When ele confirmar que o e-mail do pedido está armazenado.
+Then ele envia para o e-mail "john.connor@ufpe.br" a senha "Todos contra a Skynet".
+And ele exibe uma mensagem de confirmação de envio ao usuário.
