@@ -1,1 +1,18 @@
 Essa feature serve para o usuário conseguir pesquisar músicas na plataforma a partir de determinados filtros, sejam eles gêneros musicais, artistas, nome de banda e nome da música.
+
+Cenário: Adicionar filtros
+Given: O usuário “Ryei” está logado
+And:  “Ryei“ está na página “busca com filtros”
+When: “Ryei” seleciono a opção “adicionar um filtro”
+Then: Uma lista com as opções de gêneros musicais aparece “Rock”, “Pop”, “Metal”, “Folk”, “Clássica”
+When:  “Ryei“ seleciona o gênero “Folk“ entre as opções
+And: Seleciona a opção “confirmar“
+Then:  “Ryei“ consegue ver o gênero “Folk“ na seção “Filtros“
+
+Cenário: Remover filtros
+Given: O usuário “Ryei” está logado
+And: “Ryei“ está na página “busca com filtros”
+And: ”Ryei” já adicionou o filtro “Folk”
+When: ”Ryei” seleciona a opção “remover filtros”
+And:  seleciona o filtro “Folk”
+Then: O filtro “Folk” não está mais na seção “Filtros“
