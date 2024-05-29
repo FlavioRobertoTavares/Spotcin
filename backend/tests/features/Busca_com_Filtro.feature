@@ -29,3 +29,4 @@ Given O usuário "Ryei" está logado
 When "Ryei" digita "coldplay" na barra de pesquisa
 And seleciona a opção buscar
 Then Devem aparecer ás músicas "Yellow", "Fix You" e "Adventure of a Lifetime"
+//Acrescimo para a questão 7.e do roteiro
