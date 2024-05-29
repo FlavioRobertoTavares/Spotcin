@@ -30,7 +30,7 @@ And "Ryei" digitou "coldplay" na barra de pesquisa
 When "Ryei" seleciona a opção buscar
 Then Devem aparecer ás músicas "Yellow", "Fix You" e "Adventure of a Lifetime"
 
-Cenário: Busca de por nome de banda que não existe
+Cenário: Busca por nome de banda que não existe
 Given O usuário "Ryei" está logado
 And "Ryei" digitou "&%&" na barra de pesquisa
 When "Ryei" seleciona a opção buscar
