@@ -8,3 +8,4 @@ When: “Eu” Seleciona a playlist “Country”
 And: “Eu” seleciona a opção “compartilhar”
 Then: O link de compartilhamento da playlist “Country” é gerado
 //teste
+//fix erro(questão 8 do roteiro)
