@@ -23,3 +23,9 @@ And: está na página “busca com filtros”
 And: ”Ryei” já adicionou o filtro “Folk”
 When: “Ryei” seleciona a opção “buscar”
 Then: Deve aparecer as músicas “Pink Moon-Nick Drake” e “Ballad of Big Nothing-Elliott Smith” condizentes com o filtro “Folk”
+
+Cenário: Busca por nome de banda
+Given O usuário "Ryei" está logado
+When "Ryei" digita "coldplay" na barra de pesquisa
+And seleciona a opção buscar
+Then Devem aparecer ás músicas "Yellow", "Fix You" e "Adventure of a Lifetime"
