@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Song History</title>
+</head>
+<body>
+  <h1>Song History</h1>
+  <ul>
+    <% songsHistory.forEach(song => { %>
+      <li><%= song.itemId %> listened at <%= song.listenedAt %></li>
+    <% }); %>
+  </ul>
+  <a href="/history">Back to History</a>
+</body>
+</html>
