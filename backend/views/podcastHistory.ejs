@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Podcast History</title>
+</head>
+<body>
+  <h1>Podcast History</h1>
+  <ul>
+    <% podcastsHistory.forEach(podcast => { %>
+      <li><%= podcast.itemId %> listened at <%= podcast.listenedAt %></li>
+    <% }); %>
+  </ul>
+  <a href="/history">Back to History</a>
+</body>
+</html>
