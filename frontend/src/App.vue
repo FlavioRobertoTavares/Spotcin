@@ -40,7 +40,7 @@ watch(() => route.path, () => {
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: black;
+  background-color: plum;
   margin-bottom: 25px;
 }
 </style>

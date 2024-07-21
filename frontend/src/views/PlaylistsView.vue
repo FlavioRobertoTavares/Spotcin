@@ -18,7 +18,6 @@
 </script>
 
 
-
 <template>
 
     <div class="buttons_area">
