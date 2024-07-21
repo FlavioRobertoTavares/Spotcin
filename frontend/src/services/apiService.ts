@@ -37,9 +37,22 @@ export function useApiService() {
     }
   }
 
+  async function getUser(data){
+    const endpoint = `${baseUrl}/users/${data}`;
+    console.log(endpoint)
+    try {
+      const response = await axios.get(endpoint);
+      return response.data;
+    } catch (error) {
+      console.error('Error getting data:', error);
+      throw error;
+    }
+  }
+
   return {
     fetchData,
     postUser,
     loginUser,
+    getUser,
   };
 }

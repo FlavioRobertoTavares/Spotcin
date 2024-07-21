@@ -36,7 +36,8 @@ const login = async () => {
         if (response.code === 200) {
             console.log('Usuário logado com sucesso');
             console.log(response);
-            setLoginState(true);
+            let userID = response.data.id;
+            setLogin(true, userID);
             router.push('/');
         } else {
             console.log('Erro ao logar usuário');
@@ -48,8 +49,11 @@ const login = async () => {
     }
 };
 
-function setLoginState(isLogged: boolean) {
+function setLogin(isLogged: boolean, userId: string) {
   localStorage.setItem('isLoggedIn', JSON.stringify(isLogged))
+  if (isLogged) {
+    localStorage.setItem('userId', JSON.stringify(userId))
+  }
 }
 
 function checkLoginState() {

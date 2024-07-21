@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
 import MainPage from '../views/MainPage.vue'
+import UserAccountView from '../views/UserAccountView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       name: 'cadastro',
       component: CadastroView
     },
+    {
+      path: '/account',
+      name: 'account',
+      component: UserAccountView
+    }
   ]
 })
 
