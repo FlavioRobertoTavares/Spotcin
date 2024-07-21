@@ -24,7 +24,7 @@
       <h1>Minhas playlists</h1>
       <div class="buttons">
         <button class="btn" @click="showPopup = true">Criar playlist</button>  <!-- Pop-up aparece -->
-        <RouterLink to="/"><button class="btn">Categorias</button></RouterLink> <!-- Linkar com a view da pagina de categorias -->
+        <RouterLink to="/recommendations"><button class="btn">Categorias</button></RouterLink> <!-- Linkar com a view da pagina de categorias -->
       </div>
     </div>
 
