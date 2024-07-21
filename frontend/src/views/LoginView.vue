@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <h1>Login</h1>
+        <h1>Entrar no SPOTCIN</h1>
         <form @submit.prevent="login">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -10,7 +10,10 @@
                 <label for="password">Senha</label>
                 <input type="password" id="password" v-model="password" required>
             </div>
-            <button type="submit">Login</button>
+            <div class="forgot-password-link">
+                <router-link to="/password">Esqueceu sua senha?</router-link>
+            </div>
+            <button type="submit">Entrar</button>
         </form>
     </div>
 </template>
@@ -78,8 +81,6 @@ onMounted(() => {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 .form-group {
@@ -95,16 +96,24 @@ input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    background-color: lightgray;
+    border: 0px;
     border-radius: 5px;
 }
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: plum;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+}
+
+.forgot-password-link {
+    margin: 10px;
+    text-align: right;
 }
 </style>

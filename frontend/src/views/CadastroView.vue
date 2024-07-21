@@ -55,27 +55,30 @@ onMounted(() => {
 
 <template>
     <div class="form-container">
-        <h1>Cadastre-se</h1>
+        <h1>Cadastre-se no SPOTCIN</h1>
         <form @submit.prevent="submitForm">
             <div class="form-group">
-                <label for="name">Nome:</label>
+                <label for="name">Nome completo</label>
                 <input type="text" id="name" v-model="name" required>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" v-model="email" required>
             </div>
             <div class="form-group">
-                <label for="password">Senha:</label>
+                <label for="password">Senha</label>
                 <input type="password" id="password" v-model="password" required>
             </div>
             <div class="form-group">
-                <label for="password-confirmation">Confirme a senha:</label>
+                <label for="password-confirmation">Confirmar senha</label>
                 <input type="password" id="password-confirmation" v-model="passwordConfirmation" required>
             </div>
             <button type="submit">Cadastrar</button>
         </form>
+
+        <div>Já tem uma conta? <router-link to="/login"> Faça login aqui.</router-link></div>
     </div>
+
 </template>
 
 <style scoped>
@@ -83,7 +86,6 @@ onMounted(() => {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
@@ -101,16 +103,19 @@ input[type="password"],
 input[type="text"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    background-color: lightgray;
+    border: 0px;
     border-radius: 5px;
 }
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: plum;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
+    font-weight: bold;
 }
 </style>

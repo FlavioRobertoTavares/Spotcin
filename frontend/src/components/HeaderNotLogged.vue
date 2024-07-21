@@ -23,10 +23,10 @@ button {
     border-radius: 30px;
     cursor: pointer;
     color: black;
+    background-color: #0000;
 }
 #login {
-    background-color: gray;
-    color: white;
+    background-color: whitesmoke;
 }
 
 </style>
