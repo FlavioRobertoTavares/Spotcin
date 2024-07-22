@@ -92,6 +92,27 @@ export function useApiService() {
     }
   }
 
+  async function updatePlaylist(data) {
+    const endpoint = `${baseUrl}/playlists/${data.id}`;
+    try {
+      const response = await axios.put(endpoint, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error uptdating playlist:', error);
+      throw error;
+    }
+  }
+
+  async function removePlaylist(data) {
+    const endpoint = `${baseUrl}/playlists/${data.id}`;
+    try {
+      const response = await axios.delete(endpoint, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting playlist:', error);
+      throw error;
+    }
+  }
 
   return {
     fetchData,
@@ -102,5 +123,7 @@ export function useApiService() {
     getPlaylistByID,
     postSong,
     deleteSong,
+    updatePlaylist,
+    removePlaylist,
   };
 }

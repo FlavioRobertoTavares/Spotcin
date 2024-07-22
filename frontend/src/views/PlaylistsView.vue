@@ -22,12 +22,11 @@
       console.log('Playlist criada com sucesso');
       const playlistsResponse = await getPlaylists();
       playlists.value = playlistsResponse.data;
-      router.push('/playlists');
     } else {
       console.log('Erro ao Criar playlist');
       console.log(response);
     }
-
+    router.push('/playlists'); //Mudar pra ele não fechar e sim mostrar uma mensagem de erro
     // Fechar o pop-up após salvar
     showPopup.value = false;
   };
