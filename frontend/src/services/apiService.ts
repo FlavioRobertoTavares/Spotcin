@@ -81,6 +81,17 @@ export function useApiService() {
     }
   }
 
+  async function deleteSong(data) {
+    const endpoint = `${baseUrl}/playlists/${data.id}/songs/${data.song}`;
+    try {
+      const response = await axios.delete(endpoint, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error posting music:', error);
+      throw error;
+    }
+  }
+
 
   return {
     fetchData,
@@ -90,5 +101,6 @@ export function useApiService() {
     postPlaylist,
     getPlaylistByID,
     postSong,
+    deleteSong,
   };
 }
