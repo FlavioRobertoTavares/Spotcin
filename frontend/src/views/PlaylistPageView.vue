@@ -10,7 +10,7 @@ const props = defineProps<{
 const { id } = props;
 
 // Função para buscar a playlist por ID
-const { getPlaylistByID, postSong, deleteSong, updatePlaylist } = useApiService();
+const { getPlaylistByID, postSong, deleteSong, updatePlaylist, removePlaylist } = useApiService();
 
 // Variáveis reativas para armazenar os detalhes da playlist
 const name = ref('');
@@ -71,6 +71,17 @@ const update_playlist = async () => {
     showDetails.value = false;
   }
 };
+
+const remove_playlist = async () => {
+  const response = await removePlaylist({ id: id });
+  if (response.code != 200) {
+    console.log('Erro ao excluir playlist');
+    console.log(response);
+  }
+  router.push("/playlists");
+};
+
+
 </script>
 
 <template>
@@ -82,6 +93,7 @@ const update_playlist = async () => {
       <div class="button-group">
         <button class="add-song-btn" @click="showPopup = true">Adicionar música</button>
         <button class="update-details-btn" @click="showDetails = true">Atualizar detalhes da playlist</button>
+        <button class="delete-btn" @click="remove_playlist">Deletar a playlist</button>
       </div>
     </div>
     <p>Músicas:</p>
@@ -143,7 +155,7 @@ const update_playlist = async () => {
   gap: 8px; /* Espaço entre os botões */
 }
 
-.add-song-btn, .update-details-btn {
+.add-song-btn, .update-details-btn, .delete-btn {
   background-color: grey; /* Cor de fundo do botão */
   border: none;
   padding: 8px 16px;
@@ -152,7 +164,7 @@ const update_playlist = async () => {
   font-size: 14px;
 }
 
-.add-song-btn:hover, .update-details-btn:hover {
+.add-song-btn:hover, .update-details-btn:hover, .delete-btn:hover {
   background-color: darkgrey; /* Cor de fundo ao passar o mouse */
 }
 

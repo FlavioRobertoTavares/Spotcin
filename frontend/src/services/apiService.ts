@@ -104,7 +104,7 @@ export function useApiService() {
   }
 
   async function removePlaylist(data) {
-    const endpoint = `${baseUrl}/playlists/${data.id}`;
+    const endpoint = `${baseUrl}/playlists/${data.id}`;;
     try {
       const response = await axios.delete(endpoint, data);
       return response.data;

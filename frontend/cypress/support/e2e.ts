@@ -15,6 +15,8 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import '@badeball/cypress-cucumber-preprocessor/support';
+
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
