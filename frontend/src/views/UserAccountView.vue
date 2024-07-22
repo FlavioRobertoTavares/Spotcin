@@ -1,38 +1,38 @@
 <template>
     <div>
-        <p> Nome: {{ name }}  </p>
-        <p> Email: {{ email }}</p>
-        <button @click="openUpdatePopup">Atualizar informações</button>
-        <button @click="openDeletePopup">Excluir conta</button>
+        <div class="info">
+            <h1>Minha conta</h1>
+            <p> Nome: {{ name }}  </p>
+            <p> Email: {{ email }}</p>
+            <button @click="openUpdatePopup">Atualizar informações</button>
+            <button @click="openDeletePopup">Excluir conta</button>
+
+        </div>
 
         <div v-if="showUpdatePopup" class="popup">
             <form>
                 <h2>Atualizar informações</h2>
                 <div>
                     <label for="name">Nome</label>
-                    <input type="text" id="name" v-model="name" required>
+                    <input type="text" id="name" v-model="formName" required>
                 </div>
                 <div>
                     <label for="email">Email</label>
-                    <input type="email" id="email" v-model="email" required>
+                    <input type="email" id="email" v-model="formEmail" required>
                 </div>
                 <div>
                     <label for="password">Senha</label>
-                    <input type="password" id="password" v-model="password" required>
-                </div>
-                <div>
-                    <label for="password-confirmation">Confirme a Senha</label>
-                    <input type="password" id="password-confirmation" v-model="passwordConfirmation" required>
+                    <input type="password" id="password" v-model="formPassword" required>
                 </div>
                 <div class="buttons-container">
-                    <button id="confirm" type="submit">Atualizar</button>
+                    <button id="confirm" @click="confirmUpdateUser" type="submit">Atualizar</button>
                     <button id="cancel" @click="showUpdatePopup = false">Cancelar</button>
                 </div>
             </form>
         </div>
 
         <div v-if="showDeletePopup" class="popup">
-            <form>
+            <form @submit.prevent="confirmDeleteUser">
                 <h2>Excluir conta: {{ email }}</h2>
                 
                 <div>
@@ -51,18 +51,21 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useApiService } from '../services/apiService';
 
 let name = ref('');
 let email = ref('');
 let password = ref('');
+let formName = ref('');
+let formEmail = ref('');
+let formPassword = ref('');
 let showUpdatePopup = ref(false);
 let showDeletePopup = ref(false);
 
 
-// const router = useRouter();
-const { getUser } = useApiService();
+const router = useRouter();
+const { getUser, updateUser, deleteUser } = useApiService();
 
 onMounted(async () => {
     const userID = localStorage.getItem('userId');
@@ -71,6 +74,9 @@ onMounted(async () => {
     name.value = user.data.name;
     email.value = user.data.email;
     password.value = user.data.password;
+    formName.value = user.data.name;
+    formEmail.value = user.data.email;
+    formPassword.value = user.data.password;
 
 });
 
@@ -81,6 +87,27 @@ const openUpdatePopup = () => {
 const openDeletePopup = () => {
             showDeletePopup.value = true;
         };
+
+const confirmUpdateUser = async () => {
+    const userID = localStorage.getItem('userId');
+    const user = {
+        name: formName.value,
+        email: formEmail.value,
+        password: formPassword.value
+    };
+    await updateUser(JSON.parse(userID), user);
+    showUpdatePopup.value = false;
+};
+
+const confirmDeleteUser = async () => {
+    const userID = localStorage.getItem('userId');
+    await deleteUser(JSON.parse(userID));
+    showDeletePopup.value = false;
+    localStorage.removeItem('userId');
+    localStorage.setItem('isLoggedIn', false);
+    router.push('/');
+
+};
 
 </script>
 
@@ -119,4 +146,12 @@ const openDeletePopup = () => {
     background-color: red;
 }
 
+.info{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 20px;
+}
 </style>

@@ -49,10 +49,36 @@ export function useApiService() {
     }
   }
 
+  async function updateUser(user_id, body){
+    const endpoint = `${baseUrl}/users/${user_id}`;
+    console.log(endpoint)
+    try {
+      const response = await axios.put(endpoint, body);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating data:', error);
+      throw error;
+    }
+  }
+
+  async function deleteUser(user_id){
+    const endpoint = `${baseUrl}/users/${user_id}`;
+    console.log(endpoint)
+    try {
+      const response = await axios.delete(endpoint);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting data:', error);
+      throw error;
+    }
+  }
+
   return {
     fetchData,
     postUser,
     loginUser,
     getUser,
+    updateUser,
+    deleteUser,
   };
 }
