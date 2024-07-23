@@ -47,7 +47,6 @@ class PlaylistController {
     
     public async getPlaylists(req: Request, res: Response){
         const playlists = await this.playlistService.getPlaylists();
-
         return new SuccessResult({
             msg: Result.transformRequestOnMsg(req),
             data: playlists,
