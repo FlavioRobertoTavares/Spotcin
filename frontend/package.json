@@ -50,7 +50,8 @@
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": [
       "../frontend/cypress/e2e/features/tests/tests.cy.ts",
-      "../frontend/cypress/e2e/features/tests/playlists.cy.ts"
+      "../frontend/cypress/e2e/features/tests/playlists.cy.ts",
+      "../frontend/cypress/e2e/features/tests/signup.cy.ts"
     ]
   }
 }

@@ -35,7 +35,7 @@ const router = createRouter({
       name: 'playlist_page',
       component: PlaylistPageView, 
       props: true // Passa o parâmetro `id` como uma prop para o componente
-    }
+    },
 
     {
       path: '/account',
