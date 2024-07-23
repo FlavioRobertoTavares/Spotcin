@@ -1,9 +1,17 @@
 Feature: Playlists
 
-  Scenario: User creates a new playlist successfully
-    Given the user is on the playlists page
-    When the user clicks the "Criar playlist" button
-    And the user enters a name "Minha Playlist" in the name field
-    And the user enters a description "Descrição da minha playlist" in the description field
-    And the user clicks the "Salvar" button
-    Then a new playlist with name "Minha Playlist" should be visible on the playlists list
+  Scenario: Usuario cria uma playlist com sucesso
+    Given que o usuario esta na pagina "/playlists"
+    When quando o usuario clicar no botão "Criar playlist"
+    And preencher o nome "Minha Playlist"
+    And preencher a descrição "Descrição da minha playlist"
+    And clicar no botão "Salvar" 
+    Then uma nova playlist chamada "Minha Playlist" deve estar visivel
+
+  Scenario: Usuario desiste de criar playlist
+    Given 1que o usuario esta na pagina "/playlists"
+    When 1quando o usuario clicar no botão "Criar playlist"
+    And 1preencher o nome "Cancelando"
+    And 1preencher a descrição "Descrição da minha playlist"
+    And 1clicar no botão "Cancelar" 
+    Then 1uma nova playlist chamada "Cancelando" não deve existir

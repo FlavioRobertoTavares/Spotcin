@@ -1,25 +1,52 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 
-Given('the user is on the playlists page', () => {
-  cy.visit('/playlists'); // Atualize o caminho se necessário
+//Scenario: User creates a new playlist successfully
+Given('que o usuario esta na pagina {string}', (pageName : string) => {
+  cy.visit(pageName);
 });
 
-When('the user clicks the "Criar playlist" button', () => {
-  cy.get('button').contains('Criar playlist').click();
+When('quando o usuario clicar no botão {string}', (buttonName : string) => {
+  cy.get('button').contains(buttonName).click();
 });
 
-When('the user enters a name {string} in the name field', (playlistName: string) => {
+When('preencher o nome {string}', (playlistName: string) => {
   cy.get('#playlist-name').type(playlistName);
 });
 
-When('the user enters a description {string} in the description field', (playlistDescription: string) => {
+When('preencher a descrição {string}', (playlistDescription: string) => {
   cy.get('#playlist-description').type(playlistDescription);
 });
 
-When('the user clicks the "Salvar" button', () => {
-  cy.get('button').contains('Salvar').click();
+When('clicar no botão {string}', (buttonName : string) => {
+  cy.get('button').contains(buttonName).click();
 });
 
-Then('a new playlist with name {string} should be visible on the playlists list', (playlistName: string) => {
+Then('uma nova playlist chamada {string} deve estar visivel', (playlistName: string) => {
   cy.get('.playlists-area').should('contain', playlistName);
+});
+
+
+//Scenario: Usuario desiste de criar playlist
+Given('1que o usuario esta na pagina {string}', (pageName : string) => {
+  cy.visit(pageName);
+});
+
+When('1quando o usuario clicar no botão {string}', (buttonName : string) => {
+  cy.get('button').contains(buttonName).click();
+});
+
+When('1preencher o nome {string}', (playlistName: string) => {
+  cy.get('#playlist-name').type(playlistName);
+});
+
+When('1preencher a descrição {string}', (playlistDescription: string) => {
+  cy.get('#playlist-description').type(playlistDescription);
+});
+
+When('1clicar no botão {string}', (buttonName : string) => {
+  cy.get('button').contains(buttonName).click();
+});
+
+Then('1uma nova playlist chamada {string} não deve existir', (playlistName: string) => {
+  cy.get('.playlists-area').should('not.contain', playlistName);
 });
