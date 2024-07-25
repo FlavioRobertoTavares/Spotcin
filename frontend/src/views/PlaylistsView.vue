@@ -4,17 +4,14 @@
   import { useRouter } from 'vue-router';
   import Playlist from '../components/Playlist.vue';
 
-  // Hook do Vue Router
   const router = useRouter();
   const { getPlaylists, postPlaylist } = useApiService();
 
-  // Variáveis reativas
   const showPopup = ref(false);
   let playlistName = ref('');
   let playlistDescription = ref('');
   let playlists = ref([]);
 
-  // Função para salvar a playlist
   const savePlaylist = async () => {
     const response = await postPlaylist({ name: playlistName.value, description: playlistDescription.value });
 
@@ -26,17 +23,14 @@
       console.log('Erro ao Criar playlist');
       console.log(response);
     }
-    router.push('/playlists'); //Mudar pra ele não fechar e sim mostrar uma mensagem de erro
-    // Fechar o pop-up após salvar
+    router.push('/playlists');
     showPopup.value = false;
   };
 
-  // Função para redirecionar para a página da playlist
   const goToPlaylist = (playlistId: string) => {
     router.push(`/playlist/${playlistId}`);
   };
 
-  // Carregar playlists ao montar o componente
   onMounted(async () => {
     const playlistsResponse = await getPlaylists();
     playlists.value = playlistsResponse.data;

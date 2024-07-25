@@ -1,6 +1,6 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 
-//Scenario: User creates a new playlist successfully
+//Usuario cria uma playlist com sucesso
 Given('que o usuario esta na pagina {string}', (pageName : string) => {
   cy.visit(pageName);
 });
@@ -26,27 +26,53 @@ Then('uma nova playlist chamada {string} deve estar visivel', (playlistName: str
 });
 
 
-//Scenario: Usuario desiste de criar playlist
-Given('1que o usuario esta na pagina {string}', (pageName : string) => {
-  cy.visit(pageName);
+//Usuario atualiza uma playlist com sucesso
+Given('que a playlist {string} existe', (playlistName: string) => {
+  cy.get('.playlists-area').should('contain', playlistName);
 });
 
-When('1quando o usuario clicar no botão {string}', (buttonName : string) => {
-  cy.get('button').contains(buttonName).click();
+When('quando o usuario clicar na playlist {string}', (playlistName: string) => {
+  cy.get('.playlists-area')         
+  .find('span')                  
+  .contains(playlistName)        
+  .click();                       
 });
 
-When('1preencher o nome {string}', (playlistName: string) => {
-  cy.get('#playlist-name').type(playlistName);
+When('o usuario clicar no botão {string}', (buttonName: string) => {
+  if(buttonName == "Adicionar"){cy.get('#add-song-button').click();}
+  else{cy.get('button').contains(buttonName).click();}
 });
 
-When('1preencher a descrição {string}', (playlistDescription: string) => {
-  cy.get('#playlist-description').type(playlistDescription);
+Then('o usuario ainda está na mesma pagina e a nova descrição deve ser {string}', (newDescription: string) => {
+  cy.url().should('include', '/playlist');
+  cy.wait(2000); //Melhorar
+  cy.get('.playlist-details')
+  .find('p')                           
+  .contains('Descrição: ')            
+  .invoke('text')                     
+  .then(text => {
+    const descriptionText = text.replace('Descrição: ', '').trim();
+    expect(descriptionText).to.equal(newDescription);
+  });
 });
 
-When('1clicar no botão {string}', (buttonName : string) => {
-  cy.get('button').contains(buttonName).click();
+//Usuario adiciona uma música uma playlist com sucesso
+When('preencher o nome de música {string}', (songtName: string) => {
+  cy.get('#song-name').type(songtName);                   
 });
 
-Then('1uma nova playlist chamada {string} não deve existir', (playlistName: string) => {
+Then('o usuario ainda está na mesma pagina e a música {string} deve estar visivel', (songName: string) => {
+  cy.url().should('include', '/playlist');
+  cy.wait(2000); //Melhorar
+  cy.get('.songs-container')
+  .contains('.song-item', songName) 
+});
+
+//Usuario deleta uma playlist com sucesso
+Then('o usuario deve estar ná pagina {string}', (page: string) => {
+  cy.url().should('include', page);
+});
+
+Then('uma playlist chamada {string} não deve estar visivel', (playlistName: string) => {
   cy.get('.playlists-area').should('not.contain', playlistName);
 });
