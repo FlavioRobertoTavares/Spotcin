@@ -76,3 +76,6 @@ Then('o usuario deve estar ná pagina {string}', (page: string) => {
 Then('uma playlist chamada {string} não deve estar visivel', (playlistName: string) => {
   cy.get('.playlists-area').should('not.contain', playlistName);
 });
+
+
+
