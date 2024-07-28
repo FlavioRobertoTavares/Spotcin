@@ -8,10 +8,28 @@ Feature: Playlists
     And clicar no botão "Salvar" 
     Then uma nova playlist chamada "Minha Playlist" deve estar visivel
 
-  Scenario: Usuario desiste de criar playlist
-    Given 1que o usuario esta na pagina "/playlists"
-    When 1quando o usuario clicar no botão "Criar playlist"
-    And 1preencher o nome "Cancelando"
-    And 1preencher a descrição "Descrição da minha playlist"
-    And 1clicar no botão "Cancelar" 
-    Then 1uma nova playlist chamada "Cancelando" não deve existir
+  Scenario: Usuario atualiza uma playlist com sucesso
+    Given que o usuario esta na pagina "/playlists"
+    And que a playlist "Minha Playlist" existe
+    When quando o usuario clicar na playlist "Minha Playlist"  
+    And o usuario clicar no botão "Atualizar detalhes da playlist"
+    And preencher a descrição "Nova desc da minha playlist"
+    And clicar no botão "Salvar"
+    Then o usuario ainda está na mesma pagina e a nova descrição deve ser "Nova desc da minha playlist"
+
+  Scenario: Usuario adiciona uma música uma playlist com sucesso
+    Given que o usuario esta na pagina "/playlists"
+    And que a playlist "Minha Playlist" existe
+    When quando o usuario clicar na playlist "Minha Playlist"
+    And o usuario clicar no botão "Adicionar música"
+    And preencher o nome de música "Fur elise"
+    And o usuario clicar no botão "Adicionar"
+    Then o usuario ainda está na mesma pagina e a música "Fur elise" deve estar visivel
+
+  Scenario: Usuario deleta uma playlist com sucesso
+    Given que o usuario esta na pagina "/playlists"
+    And que a playlist "Minha Playlist" existe
+    When quando o usuario clicar na playlist "Minha Playlist"
+    And o usuario clicar no botão "Deletar a playlist"
+    Then o usuario deve estar ná pagina "/playlists"
+    And uma playlist chamada "Minha Playlist" não deve estar visivel

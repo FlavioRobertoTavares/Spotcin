@@ -17,7 +17,7 @@ class PlaylistRepository extends BaseRepository<PlaylistEntity> {
 
   public async getPlaylistById(id: string): Promise<PlaylistEntity | undefined> {
     try {
-      let playlists = await this.findAll();
+      let playlists = await this.getPlaylists();
       let playlist = playlists.find((playlist) => playlist.id === id);
 
       return playlist;

@@ -1,87 +1,78 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from 'vue';
-import { useApiService } from '../services/apiService';
-import router from '../router';
+  import { defineProps, ref, onMounted } from 'vue';
+  import { useApiService } from '../services/apiService';
+  import router from '../router';
 
-// Define as props esperadas
-const props = defineProps<{
-  id: string;
-}>();
-const { id } = props;
+  const props = defineProps<{
+    id: string;
+  }>();
+  const { id } = props;
 
-// Função para buscar a playlist por ID
-const { getPlaylistByID, postSong, deleteSong, updatePlaylist, removePlaylist } = useApiService();
+  const { getPlaylistByID, postSong, deleteSong, updatePlaylist, removePlaylist } = useApiService();
 
-// Variáveis reativas para armazenar os detalhes da playlist
-const name = ref('');
-const description = ref('');
-const newName = ref('');
-const newDescription = ref('');
-const song = ref('');
-const categories = ref<string[]>([]);
-const songs = ref<string[]>([]);
-const showPopup = ref(false);
-const showDetails = ref(false);
+  const name = ref('');
+  const description = ref('');
+  const newName = ref('');
+  const newDescription = ref('');
+  const song = ref('');
+  const categories = ref<string[]>([]);
+  const songs = ref<string[]>([]);
+  const showPopup = ref(false);
+  const showDetails = ref(false);
 
-// Mostrar a playlist
-onMounted(async () => {
-  const response = await getPlaylistByID(id);
-  if (response.code === 200) {
-    name.value = response.data.name;
-    description.value = response.data.description;
-    categories.value = response.data.categories;
-    songs.value = response.data.songs;
-  } else {
-    console.log('Erro ao buscar a playlist');
-    console.log(response);
-  }
-});
+  onMounted(async () => {
+    const response = await getPlaylistByID(id);
+    if (response.code === 200) {
+      name.value = response.data.name;
+      description.value = response.data.description;
+      categories.value = response.data.categories;
+      songs.value = response.data.songs;
+    } else {
+      console.log('Erro ao buscar a playlist');
+      console.log(response);
+    }
+  });
 
-// Função chamada ao clicar no botão "Adicionar música"
-const add_Song = async () => {
-  const response = await postSong({ id: id, song: song.value });
-  if (response.code != 200) {
-    console.log('Erro ao adicionar música');
-    console.log(response);
-  }
-  router.go(0);
-  showPopup.value = false;
-};
-
-// Função chamada ao clicar no botão "Excluir"
-const remove_song = async (songName: string) => {
-  const response = await deleteSong({ id: id, song: songName });
-  if (response.code != 200) {
-    console.log('Erro ao excluir música');
-    console.log(response);
-  }
-  router.go(0);
-};
-
-// Função chamada ao clicar no botão "Atualizar detalhes da playlist"
-const update_playlist = async () => {
-  if(newName.value == ''){newName.value = name.value;}
-  if(newDescription.value == ''){newDescription.value = description.value;}
-  const response = await updatePlaylist({ id: id, name: newName.value, description: newDescription.value });
-  if (response.code != 200) {
-    console.log('Erro ao atualizar playlist');
-    console.log(response);
-  } else {
+  const add_Song = async () => {
+    const response = await postSong({ id: id, song: song.value });
+    if (response.code != 200) {
+      console.log('Erro ao adicionar música');
+      console.log(response);
+    }
     router.go(0);
-    showDetails.value = false;
-  }
-};
+    showPopup.value = false;
+  };
 
-const remove_playlist = async () => {
-  const response = await removePlaylist({ id: id });
-  if (response.code != 200) {
-    console.log('Erro ao excluir playlist');
-    console.log(response);
-  }
-  router.push("/playlists");
-};
+  const remove_song = async (songName: string) => {
+    const response = await deleteSong({ id: id, song: songName });
+    if (response.code != 200) {
+      console.log('Erro ao excluir música');
+      console.log(response);
+    }
+    router.go(0);
+  };
 
+  const update_playlist = async () => {
+    if(newName.value == ''){newName.value = name.value;}
+    if(newDescription.value == ''){newDescription.value = description.value;}
+    const response = await updatePlaylist({ id: id, name: newName.value, description: newDescription.value });
+    if (response.code != 200) {
+      console.log('Erro ao atualizar playlist');
+      console.log(response);
+    } else {
+      router.go(0);
+      showDetails.value = false;
+    }
+  };
 
+  const remove_playlist = async () => {
+    const response = await removePlaylist({ id: id });
+    if (response.code != 200) {
+      console.log('Erro ao excluir playlist');
+      console.log(response);
+    }
+    router.push("/playlists");
+  };
 </script>
 
 <template>
@@ -111,7 +102,7 @@ const remove_playlist = async () => {
       <h2>Adicionar Música</h2>
       <label for="song-name">Nome da Música:</label>
       <input type="text" id="song-name" v-model="song" />
-      <button @click="add_Song">Adicionar</button>
+      <button id="add-song-button" @click="add_Song">Adicionar</button>
       <button @click="showPopup = false">Cancelar</button>
     </div>
   </div>
