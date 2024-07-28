@@ -52,3 +52,49 @@ Feature: Cadastro de Usuário
         When o usuário clica no link "Já tem uma conta? Faça login aqui"
         Then o usuário deve ser redirecionado para a página "/login"
 
+    Scenario: Deletar conta de usuário
+        Given o usuário está logado com o email "fulano@email.com"
+        And o usuário está na página "/account"
+        When o usuário clica no link "Excluir conta"
+        And o usuário preenche o campo "password" com "123456"
+        And o usuário clica no botão "Excluir"
+        Then o usuário deve ser redirecionado para a página "/"
+        # And não deve existir um usuário com o email "fulano@email.com"
+    
+    Scenario: Deletar conta de usuário com senha incorreta
+        Given o usuário está logado com o email "fulano@email.com"
+        And o usuário está na página "/account"
+        When o usuário clica no link "Excluir conta"
+        And o usuário preenche o campo "password" com "senha-incorreta"
+        And o usuário clica no botão com id "confirm"
+        Then o usuário deve permanecer na página "/account"
+
+    Scenario: Atualizar nome do usuário
+        Given o usuário está logado com o email "fulano@email.com"
+        Given o usuário está na página "/account"
+        When o usuário clica no link "Atualizar informações"
+        And o usuário preenche o campo "name" com "nome atualizado de fulano"
+        And o usuário preenche o campo "password" com "123456"
+        And o usuário clica no botão com id "confirm"
+        Then o usuário deve permanecer na página "/account"
+        And o usuário deve ver o nome "nome atualizado de fulano"
+
+    Scenario: Atualizar email do usuário
+        Given o usuário está logado com o email "fulano@email.com"
+        Given o usuário está na página "/account"
+        When o usuário clica no link "Atualizar informações"
+        And o usuário preenche o campo "email" com "email_atualizado@email.com"
+        And o usuário preenche o campo "password" com "123456"
+        And o usuário clica no botão com id "confirm"
+        Then o usuário deve permanecer na página "/account"
+        And o usuário deve ver o nome "email_atualizado@email.com"
+
+Scenario: Atualizar informação com senha incorreta
+        Given o usuário está logado com o email "fulano@email.com"
+        Given o usuário está na página "/account"
+        When o usuário clica no link "Atualizar informações"
+        And o usuário preenche o campo "name" com "nome atualizado de fulano"
+        And o usuário preenche o campo "email" com "email_atualizado@email.com"
+        And o usuário preenche o campo "password" com "senha-incorreta"
+        And o usuário clica no botão com id "confirm"
+        Then o usuário deve permanecer na página "/account"
