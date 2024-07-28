@@ -10,7 +10,7 @@
         </div>
 
         <div v-if="showUpdatePopup" class="popup">
-            <form>
+            <form @submit.prevent="confirmUpdateUser">
                 <h2>Atualizar informações</h2>
                 <div>
                     <label for="name">Nome</label>
@@ -20,12 +20,16 @@
                     <label for="email">Email</label>
                     <input type="email" id="email" v-model="formEmail" required>
                 </div>
+                <br>
+                <div>
+                    <p>Digite sua senha para confirmar as atualizações:</p>
+                </div>
                 <div>
                     <label for="password">Senha</label>
                     <input type="password" id="password" v-model="formPassword" required>
                 </div>
                 <div class="buttons-container">
-                    <button id="confirm" @click="confirmUpdateUser" type="submit">Atualizar</button>
+                    <button id="confirm" type="submit">Atualizar</button>
                     <button id="cancel" @click="showUpdatePopup = false">Cancelar</button>
                 </div>
             </form>
@@ -37,7 +41,7 @@
                 
                 <div>
                     <label for="password">Confirme sua senha: </label>
-                    <input type="password" id="password" v-model="password" required>
+                    <input type="password" id="password" v-model="deletePassword" required>
                 </div>
                 
                 <div class="buttons-container">
@@ -56,7 +60,7 @@ import { useApiService } from '../services/apiService';
 
 let name = ref('');
 let email = ref('');
-let password = ref('');
+let deletePassword = ref('');
 let formName = ref('');
 let formEmail = ref('');
 let formPassword = ref('');
@@ -73,10 +77,8 @@ onMounted(async () => {
     console.log(user.data);
     name.value = user.data.name;
     email.value = user.data.email;
-    password.value = user.data.password;
     formName.value = user.data.name;
     formEmail.value = user.data.email;
-    formPassword.value = user.data.password;
 
 });
 
@@ -95,12 +97,26 @@ const confirmUpdateUser = async () => {
         email: formEmail.value,
         password: formPassword.value
     };
+    let response = await getUser(JSON.parse(userID));
+    if (response.data.password !== formPassword.value) {
+        alert('Senha incorreta');
+        return;
+    }
+
     await updateUser(JSON.parse(userID), user);
     showUpdatePopup.value = false;
+    
+    location.reload();
 };
 
 const confirmDeleteUser = async () => {
     const userID = localStorage.getItem('userId');
+    let response = await getUser(JSON.parse(userID));
+    if (response.data.password !== deletePassword.value) {
+        alert('Senha incorreta');
+        return;
+    }
+
     await deleteUser(JSON.parse(userID));
     showDeletePopup.value = false;
     localStorage.removeItem('userId');
