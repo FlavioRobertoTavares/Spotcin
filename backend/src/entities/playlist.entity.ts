@@ -5,6 +5,7 @@ class PlaylistEntity extends BaseEntity {
     description: string;
     songs: string[];
     categories: string[];
+    userId: string;
 
     constructor(data: Partial<PlaylistEntity>) {
         super(data.id || '');
@@ -12,6 +13,7 @@ class PlaylistEntity extends BaseEntity {
         this.description = data.description || '';
         this.songs = data.songs || [];
         this.categories = data.categories || [];   
+        this.userId = data.userId || '';
     }
 
 }

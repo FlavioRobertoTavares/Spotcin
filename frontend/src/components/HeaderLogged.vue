@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-link to="/">
-            <button id="home">Home</button>
+            <button id="home">Início</button>
         </router-link>
         <router-link to="/recommendations">
             <button >Recomendações</button>
@@ -22,9 +22,12 @@
 </template>
 
 <script setup lang="ts">
+
+
 const logout = () => {
   localStorage.setItem('isLoggedIn', JSON.stringify(false))
 }
+
 
 
 </script>
@@ -39,9 +42,9 @@ button {
     border-radius: 30px;
     cursor: pointer;
     color: black;
+    background-color: #0000;
 }
 #home {
-    background-color: grey;
-    color: white;
+    background-color: whitesmoke;
 }
 </style>

@@ -20,16 +20,16 @@ class PlaylistService {
     this.playlistRepository = playlistRepository;
   }
 
-  public async getPlaylists(): Promise<PlaylistModel[]>{
-    const playlistEntity = await this.playlistRepository.getPlaylists()
+  public async getPlaylists(userId: string): Promise<PlaylistModel[]>{
+    const playlistEntity = await this.playlistRepository.getPlaylists(userId)
 
     const playlistsModel = playlistEntity.map((play) => new PlaylistModel(play));
 
     return playlistsModel;
   }
 
-  public async getPlaylistById(id: string): Promise<PlaylistModel>{
-    const playlistEntity = await this.playlistRepository.getPlaylistById(id);
+  public async getPlaylistById(id: string, userId: string): Promise<PlaylistModel>{
+    const playlistEntity = await this.playlistRepository.getPlaylistById(id, userId);
 
     if(!playlistEntity){
       throw new NotFoundError({
@@ -43,9 +43,9 @@ class PlaylistService {
     return playlistModel;
   }
 
-  public async deletePlaylistById(id: string): Promise<void>{
+  public async deletePlaylistById(id: string, userId: string): Promise<void>{
 
-    const playlistEntity = await this.playlistRepository.getPlaylistById(id);
+    const playlistEntity = await this.playlistRepository.getPlaylistById(id, userId);
 
     if(!playlistEntity){
       throw new NotFoundError({
@@ -54,7 +54,7 @@ class PlaylistService {
       });
     }
 
-    await this.playlistRepository.deletePlaylistById(id);
+    await this.playlistRepository.deletePlaylistById(id, userId);
 
   }
   
@@ -96,8 +96,8 @@ class PlaylistService {
     return playlistModel;
   }
 
-  public async deleteSongUsingPlaylistId(song: string, id: string): Promise<void>{
-    const playlistEntity = await this.playlistRepository.getPlaylistById(id);
+  public async deleteSongUsingPlaylistId(song: string, id: string, userId: string): Promise<void>{
+    const playlistEntity = await this.playlistRepository.getPlaylistById(id, userId);
 
     if(!playlistEntity){
       throw new NotFoundError({
@@ -119,11 +119,11 @@ class PlaylistService {
       });
     }
 
-    await this.playlistRepository.deleteSongUsingPlaylistId(song, id);
+    await this.playlistRepository.deleteSongUsingPlaylistId(song, id, userId);
   }
 
-  public async addSongUsingPlaylistId(song: string, id: string): Promise<void>{
-    const playlistEntity = await this.playlistRepository.getPlaylistById(id);
+  public async addSongUsingPlaylistId(song: string, id: string, userId: string): Promise<void>{
+    const playlistEntity = await this.playlistRepository.getPlaylistById(id, userId);
     if(!playlistEntity){
       throw new NotFoundError({
         msg: 'Playlist id not found',
@@ -144,7 +144,7 @@ class PlaylistService {
       });
     }
     
-    await this.playlistRepository.addSongUsingPlaylistId(song, id);
+    await this.playlistRepository.addSongUsingPlaylistId(song, id, userId);
   }
 }
 export default PlaylistService;
