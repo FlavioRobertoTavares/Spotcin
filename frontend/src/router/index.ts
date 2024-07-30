@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
 import MainPage from '../views/MainPage.vue'
+import UserAccountView from '../views/UserAccountView.vue'
 import PlaylistsView from '@/views/PlaylistsView.vue'
 import PlaylistPageView from '@/views/PlaylistPageView.vue'
 
@@ -34,8 +35,13 @@ const router = createRouter({
       name: 'playlist_page',
       component: PlaylistPageView, 
       props: true
-    }
+    },
 
+    {
+      path: '/account',
+      name: 'account',
+      component: UserAccountView
+    }
   ]
 })
 

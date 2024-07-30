@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-link to="/">
-            <button id="home">Home</button>
+            <button id="home">Início</button>
         </router-link>
         <router-link to="/recommendations">
             <button >Recomendações</button>
@@ -39,9 +39,9 @@ button {
     border-radius: 30px;
     cursor: pointer;
     color: black;
+    background-color: #0000;
 }
 #home {
-    background-color: grey;
-    color: white;
+    background-color: whitesmoke;
 }
 </style>
