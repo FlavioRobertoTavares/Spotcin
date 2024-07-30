@@ -15,11 +15,11 @@ class PlaylistController {
     }
 
     private initRoutes() {
-        this.router.get(this.prefix, (req: Request, res: Response) =>
+        this.router.get(`${this.prefix}/:userId`, (req: Request, res: Response) =>
             this.getPlaylists(req, res)
         );
 
-        this.router.get(`${this.prefix}/:id`, (req: Request, res: Response) =>
+        this.router.get(`${this.prefix}/:id/:userId`, (req: Request, res: Response) =>
             this.getPlaylistById(req, res)
         );
         
@@ -27,26 +27,26 @@ class PlaylistController {
             this.createPlaylist(req, res)
         );
 
-        this.router.post(`${this.prefix}/:id/songs/:song`, (req: Request, res: Response) =>
+        this.router.post(`${this.prefix}/:id/songs/:song/:userId`, (req: Request, res: Response) =>
             this.addSongUsingPlaylistId(req, res)
         );
 
-        this.router.put(`${this.prefix}/:id`, (req: Request, res: Response) =>
+        this.router.put(`${this.prefix}/:id/:userId`, (req: Request, res: Response) =>
             this.updatePlaylistById(req, res)
         );
 
-        this.router.delete(`${this.prefix}/:id`, (req: Request, res: Response) =>
+        this.router.delete(`${this.prefix}/:id/:userId`, (req: Request, res: Response) =>
             this.deletePlaylistById(req, res)
         );
         
-        this.router.delete(`${this.prefix}/:id/songs/:song`, (req: Request, res: Response) =>
+        this.router.delete(`${this.prefix}/:id/songs/:song/:userId`, (req: Request, res: Response) =>
             this.deleteSongUsingPlaylistId(req, res)
         );
 
     }
     
     public async getPlaylists(req: Request, res: Response){
-        const playlists = await this.playlistService.getPlaylists();
+        const playlists = await this.playlistService.getPlaylists(req.params.userId);
         return new SuccessResult({
             msg: Result.transformRequestOnMsg(req),
             data: playlists,
@@ -54,7 +54,7 @@ class PlaylistController {
     }
 
     public async getPlaylistById(req: Request, res: Response){
-        const playlist = await this.playlistService.getPlaylistById(req.params.id);
+        const playlist = await this.playlistService.getPlaylistById(req.params.id, req.params.userId);
 
         return new SuccessResult({
             msg: Result.transformRequestOnMsg(req),
@@ -63,7 +63,7 @@ class PlaylistController {
     }
     
     public async deletePlaylistById(req: Request, res: Response){
-        await this.playlistService.deletePlaylistById(req.params.id);
+        await this.playlistService.deletePlaylistById(req.params.id, req.params.userId);
 
         return new SuccessResult({
             msg: Result.transformRequestOnMsg(req),
@@ -71,7 +71,7 @@ class PlaylistController {
     }
 
     public async updatePlaylistById(req: Request, res: Response){
-        const oldPlaylist = await this.playlistService.getPlaylistById(req.params.id);
+        const oldPlaylist = await this.playlistService.getPlaylistById(req.params.id, req.params.userId);
         req.body.songs = oldPlaylist.songs;
         const playlist = await this.playlistService.updatePlaylistById(new PlaylistEntity(req.body), req.params.id);
 
@@ -91,7 +91,7 @@ class PlaylistController {
     }
 
     public async deleteSongUsingPlaylistId(req: Request, res: Response){
-        await this.playlistService.deleteSongUsingPlaylistId(req.params.song, req.params.id);
+        await this.playlistService.deleteSongUsingPlaylistId(req.params.song, req.params.id, req.params.userId);
 
         return new SuccessResult({
             msg: Result.transformRequestOnMsg(req),
@@ -99,7 +99,7 @@ class PlaylistController {
     }
 
     public async addSongUsingPlaylistId(req: Request, res: Response){
-        await this.playlistService.addSongUsingPlaylistId(req.params.song, req.params.id);
+        await this.playlistService.addSongUsingPlaylistId(req.params.song, req.params.id, req.params.userId);
 
         return new SuccessResult({
             msg: Result.transformRequestOnMsg(req),

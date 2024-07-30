@@ -27,6 +27,7 @@ defineFeature(feature, (test) => {
               response = await request.post(url).send({
                 name: playlistName,
                 description: playlistDescription,
+                userId: "20",
               });
         });
 
@@ -71,6 +72,7 @@ defineFeature(feature, (test) => {
             mockPlaylistEntity = new PlaylistEntity({
                 id: playlistId,
                 name: playlistName,
+                userId: "20",
             })
 
             await mockPlaylistRepository.createPlaylist(mockPlaylistEntity);
@@ -80,6 +82,7 @@ defineFeature(feature, (test) => {
             async (url, playlistName) => {
               response = await request.put(url).send({
                 name: playlistName,
+                userId: "20",
               });
         });
 
@@ -102,8 +105,8 @@ defineFeature(feature, (test) => {
 
     test('Uptade de uma playlist que não existe', ({ given, when, then, and }) => {
       given(/^que o PlaylistRepository não tem uma playlist com id "(.*)"$/, async (playlistId) => {
-        const existingPlaylist = await mockPlaylistRepository.getPlaylistById(playlistId);
-        if(existingPlaylist){await mockPlaylistRepository.deletePlaylistById(playlistId);}
+        const existingPlaylist = await mockPlaylistRepository.getPlaylistById(playlistId, "20");
+        if(existingPlaylist){await mockPlaylistRepository.deletePlaylistById(playlistId, "20");}
 
       });
 
@@ -111,6 +114,7 @@ defineFeature(feature, (test) => {
           async (url, playlistName) => {
             response = await request.put(url).send({
               name: playlistName,
+              userId: "20",
             });
       });
 
@@ -128,6 +132,7 @@ defineFeature(feature, (test) => {
         mockPlaylistEntity = new PlaylistEntity({
             id: playlistId,
             name: playlistName,
+            userId: "20",
         })
 
         await mockPlaylistRepository.createPlaylist(mockPlaylistEntity);
@@ -149,8 +154,8 @@ defineFeature(feature, (test) => {
 
   test('Delete de uma playlist que não existe', ({ given, when, then, and }) => {
     given(/^que o PlaylistRepository não tem uma playlist com id "(.*)"$/, async (playlistId) => {
-      const existingPlaylist = await mockPlaylistRepository.getPlaylistById(playlistId);
-      if(existingPlaylist){await mockPlaylistRepository.deletePlaylistById(playlistId);}
+      const existingPlaylist = await mockPlaylistRepository.getPlaylistById(playlistId, "20");
+      if(existingPlaylist){await mockPlaylistRepository.deletePlaylistById(playlistId, "20");}
     });
 
     when(/^uma requisição DELETE for enviada para "(.*)"$/,
@@ -172,6 +177,7 @@ defineFeature(feature, (test) => {
       mockPlaylistEntity = new PlaylistEntity({
           id: playlistId,
           name: playlistName,
+          userId: "20",
       })
 
       await mockPlaylistRepository.createPlaylist(mockPlaylistEntity);
@@ -197,6 +203,7 @@ defineFeature(feature, (test) => {
           id: playlistId,
           name: playlistName,
           songs: [songName],
+          userId: "20",
       })
 
       await mockPlaylistRepository.createPlaylist(mockPlaylistEntity);
@@ -222,6 +229,7 @@ defineFeature(feature, (test) => {
           id: playlistId,
           name: playlistName,
           songs: [songName],
+          userId: "20",
       })
 
       await mockPlaylistRepository.createPlaylist(mockPlaylistEntity);
@@ -246,6 +254,7 @@ defineFeature(feature, (test) => {
       mockPlaylistEntity = new PlaylistEntity({
           id: playlistId,
           name: playlistName,
+          userId: "20"
       })
 
       await mockPlaylistRepository.createPlaylist(mockPlaylistEntity);

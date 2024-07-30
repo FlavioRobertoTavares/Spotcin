@@ -3,6 +3,12 @@
   import { useApiService } from '../services/apiService';
   import router from '../router';
 
+ 
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+  if (!isLoggedIn) {
+    router.push('/login'); 
+  }
+
   const props = defineProps<{
     id: string;
   }>();
@@ -10,6 +16,7 @@
 
   const { getPlaylistByID, postSong, deleteSong, updatePlaylist, removePlaylist } = useApiService();
 
+  const userId = JSON.parse(localStorage.getItem('userId') || 'null');
   const name = ref('');
   const description = ref('');
   const newName = ref('');
@@ -21,7 +28,7 @@
   const showDetails = ref(false);
 
   onMounted(async () => {
-    const response = await getPlaylistByID(id);
+    const response = await getPlaylistByID({ id: id, userId: userId });
     if (response.code === 200) {
       name.value = response.data.name;
       description.value = response.data.description;
@@ -34,7 +41,7 @@
   });
 
   const add_Song = async () => {
-    const response = await postSong({ id: id, song: song.value });
+    const response = await postSong({ id: id, song: song.value, userId: userId });
     if (response.code != 200) {
       console.log('Erro ao adicionar música');
       console.log(response);
@@ -44,7 +51,7 @@
   };
 
   const remove_song = async (songName: string) => {
-    const response = await deleteSong({ id: id, song: songName });
+    const response = await deleteSong({ id: id, song: songName, userId: userId });
     if (response.code != 200) {
       console.log('Erro ao excluir música');
       console.log(response);
@@ -55,7 +62,7 @@
   const update_playlist = async () => {
     if(newName.value == ''){newName.value = name.value;}
     if(newDescription.value == ''){newDescription.value = description.value;}
-    const response = await updatePlaylist({ id: id, name: newName.value, description: newDescription.value });
+    const response = await updatePlaylist({ id: id, name: newName.value, description: newDescription.value, userId: userId });
     if (response.code != 200) {
       console.log('Erro ao atualizar playlist');
       console.log(response);
@@ -66,7 +73,7 @@
   };
 
   const remove_playlist = async () => {
-    const response = await removePlaylist({ id: id });
+    const response = await removePlaylist({ id: id, userId: userId });
     if (response.code != 200) {
       console.log('Erro ao excluir playlist');
       console.log(response);

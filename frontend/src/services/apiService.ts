@@ -37,10 +37,10 @@ export function useApiService() {
     }
   }
 
-  async function getPlaylists() {
-    const endpoint = `${baseUrl}/playlists`;
+  async function getPlaylists(data) {
+    const endpoint = `${baseUrl}/playlists/${data.userId}`;
     try{
-      const response = await axios.get(endpoint)
+      const response = await axios.get(endpoint, data)
       return response.data
     }catch (error) {
       console.error("Error getting all playlists", error);
@@ -49,7 +49,7 @@ export function useApiService() {
   }
 
   async function getPlaylistByID(data) {
-    const endpoint = `${baseUrl}/playlists/${data}`;
+    const endpoint = `${baseUrl}/playlists/${data.id}/${data.userId}`;
     try{
       const response = await axios.get(endpoint, data)
       return response.data
@@ -71,7 +71,7 @@ export function useApiService() {
   }
 
   async function postSong(data) {
-    const endpoint = `${baseUrl}/playlists/${data.id}/songs/${data.song}`;
+    const endpoint = `${baseUrl}/playlists/${data.id}/songs/${data.song}/${data.userId}`;
     try {
       const response = await axios.post(endpoint, data);
       return response.data;
@@ -82,7 +82,7 @@ export function useApiService() {
   }
 
   async function deleteSong(data) {
-    const endpoint = `${baseUrl}/playlists/${data.id}/songs/${data.song}`;
+    const endpoint = `${baseUrl}/playlists/${data.id}/songs/${data.song}/${data.userId}`;
     try {
       const response = await axios.delete(endpoint, data);
       return response.data;
@@ -93,7 +93,7 @@ export function useApiService() {
   }
 
   async function updatePlaylist(data) {
-    const endpoint = `${baseUrl}/playlists/${data.id}`;
+    const endpoint = `${baseUrl}/playlists/${data.id}/${data.userId}`;
     try {
       const response = await axios.put(endpoint, data);
       return response.data;
@@ -104,7 +104,7 @@ export function useApiService() {
   }
 
   async function removePlaylist(data) {
-    const endpoint = `${baseUrl}/playlists/${data.id}`;
+    const endpoint = `${baseUrl}/playlists/${data.id}/${data.userId}`;
     try {
       const response = await axios.delete(endpoint, data);
       return response.data;

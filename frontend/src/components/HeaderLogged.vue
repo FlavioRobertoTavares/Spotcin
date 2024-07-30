@@ -22,9 +22,12 @@
 </template>
 
 <script setup lang="ts">
+
+
 const logout = () => {
   localStorage.setItem('isLoggedIn', JSON.stringify(false))
 }
+
 
 
 </script>

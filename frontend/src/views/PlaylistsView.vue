@@ -7,17 +7,18 @@
   const router = useRouter();
   const { getPlaylists, postPlaylist } = useApiService();
 
+  const userId = JSON.parse(localStorage.getItem('userId') || 'null');
   const showPopup = ref(false);
   let playlistName = ref('');
   let playlistDescription = ref('');
   let playlists = ref([]);
 
   const savePlaylist = async () => {
-    const response = await postPlaylist({ name: playlistName.value, description: playlistDescription.value });
+    const response = await postPlaylist({ name: playlistName.value, description: playlistDescription.value, userId: userId });
 
     if (response.code === 200) {
       console.log('Playlist criada com sucesso');
-      const playlistsResponse = await getPlaylists();
+      const playlistsResponse = await getPlaylists({userId: userId});
       playlists.value = playlistsResponse.data;
     } else {
       console.log('Erro ao Criar playlist');
@@ -32,7 +33,14 @@
   };
 
   onMounted(async () => {
-    const playlistsResponse = await getPlaylists();
+    const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+    const userId = JSON.parse(localStorage.getItem('userId') || 'null');
+
+    if (!isLoggedIn) {
+      router.push('/login'); 
+    }
+
+    const playlistsResponse = await getPlaylists({userId: userId});
     playlists.value = playlistsResponse.data;
   });
 </script>

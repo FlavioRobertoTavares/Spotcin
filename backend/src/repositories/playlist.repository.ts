@@ -7,17 +7,20 @@ class PlaylistRepository extends BaseRepository<PlaylistEntity> {
     super('playlists');
   }
 
-  public async getPlaylists(): Promise<PlaylistEntity[]> {
+  public async getPlaylists(userId: string): Promise<PlaylistEntity[]> {
     try {
-      return await this.findAll();
+      const allPlaylists = await this.findAll();
+      const userPlaylists = allPlaylists.filter(playlist => playlist.userId === userId);
+
+      return userPlaylists;
     } catch (e) {
       throw new InternalServerError();
     }
   }
 
-  public async getPlaylistById(id: string): Promise<PlaylistEntity | undefined> {
+  public async getPlaylistById(id: string, userId: string): Promise<PlaylistEntity | undefined> {
     try {
-      let playlists = await this.getPlaylists();
+      let playlists = await this.getPlaylists(userId);
       let playlist = playlists.find((playlist) => playlist.id === id);
 
       return playlist;
@@ -26,9 +29,9 @@ class PlaylistRepository extends BaseRepository<PlaylistEntity> {
     }
   }
 
-  public async deletePlaylistById(id: string): Promise<void> {
+  public async deletePlaylistById(id: string, userId: string): Promise<void> {
     try {
-      const playlist = await this.getPlaylistById(id);
+      const playlist = await this.getPlaylistById(id, userId);
 
       if (playlist) {
         await this.delete((playlist) => playlist.id !== id);
@@ -60,9 +63,9 @@ class PlaylistRepository extends BaseRepository<PlaylistEntity> {
     }
   }
   
-  public async deleteSongUsingPlaylistId(song: string, id: string): Promise<void> {
+  public async deleteSongUsingPlaylistId(song: string, id: string, userId: string): Promise<void> {
     try {
-      const playlist = await this.getPlaylistById(id);
+      const playlist = await this.getPlaylistById(id, userId);
       if (playlist) {
         const nPlaylist = {
           ...playlist,
@@ -76,9 +79,9 @@ class PlaylistRepository extends BaseRepository<PlaylistEntity> {
     }
   }
 
-  public async addSongUsingPlaylistId(song: string, id: string): Promise<void> {
+  public async addSongUsingPlaylistId(song: string, id: string, userId: string): Promise<void> {
     try {
-      const playlist = await this.getPlaylistById(id);
+      const playlist = await this.getPlaylistById(id, userId);
       if (playlist) {
         const nPlaylist = {
           ...playlist,
